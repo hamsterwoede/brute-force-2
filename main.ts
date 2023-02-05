@@ -7,13 +7,6 @@ input.onButtonPressed(Button.A, function () {
         state = 0
     }
 })
-input.onGesture(Gesture.Shake, function () {
-    state = 3
-})
-input.onLogoEvent(TouchButtonEvent.Pressed, function () {
-    state = 1
-    currentNum = randint(0, MaxNum)
-})
 function draw (PixelNr: number, showPixel: boolean) {
     xPos = PixelNr % 5
     yPos = Math.idiv(PixelNr, 5)
@@ -34,6 +27,9 @@ input.onButtonPressed(Button.B, function () {
         state = 0
     }
 })
+input.onGesture(Gesture.Shake, function () {
+    state = 3
+})
 function drawNumber (NumberToDraw: number) {
     // Deze loop loopt door alle pixels heen
     for (let PixelPos2 = 0; PixelPos2 <= pixels; PixelPos2++) {
@@ -44,9 +40,14 @@ function drawNumber (NumberToDraw: number) {
         }
     }
 }
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    state = 1
+    currentNum = randint(0, MaxNum)
+})
+let bright = 0
+let currentNum = 0
 let yPos = 0
 let xPos = 0
-let currentNum = 0
 let state = 0
 let Counter = 0
 let MaxNum = 0
@@ -78,17 +79,13 @@ basic.forever(function () {
     } else if (state == 2) {
         basic.clearScreen()
         basic.showNumber(currentNum)
-        for (let index = 0; index < 4; index++) {
-            basic.showIcon(IconNames.Square, fpsFraction * 2)
-basic.showIcon(IconNames.SmallSquare, fpsFraction * 2)
-basic.showIcon(IconNames.SmallDiamond, fpsFraction * 2)
-basic.showLeds(`
-                . . . . .
-                . . . . .
-                . . # . .
-                . . . . .
-                . . . . .
-                `, fpsFraction * 2)
+        bright = 0
+        led.setBrightness(bright)
+        drawNumber(currentNum)
+        for (let index = 0; index < 12; index++) {
+            bright += 20
+            basic.pause(fpsFraction)
+            led.setBrightness(bright)
         }
         state = 1
     } else if (state == 3) {
