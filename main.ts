@@ -19,6 +19,17 @@ function draw (PixelNr: number, showPixel: boolean) {
 input.onButtonPressed(Button.AB, function () {
     state = 2
 })
+function fadeInNumber () {
+    bright = 0
+    led.setBrightness(bright)
+    drawNumber(currentNum)
+    // fades in number
+    for (let index = 0; index < 10; index++) {
+        bright += 25
+        basic.pause(10)
+        led.setBrightness(bright)
+    }
+}
 input.onButtonPressed(Button.B, function () {
     Counter = 1
     if (state != 1) {
@@ -44,8 +55,8 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     state = 1
     currentNum = randint(0, MaxNum)
 })
-let bright = 0
 let currentNum = 0
+let bright = 0
 let yPos = 0
 let xPos = 0
 let state = 0
@@ -79,14 +90,7 @@ basic.forever(function () {
     } else if (state == 2) {
         basic.clearScreen()
         basic.showNumber(currentNum)
-        bright = 0
-        led.setBrightness(bright)
-        drawNumber(currentNum)
-        for (let index = 0; index < 12; index++) {
-            bright += 20
-            basic.pause(fpsFraction)
-            led.setBrightness(bright)
-        }
+        fadeInNumber()
         state = 1
     } else if (state == 3) {
         // If working on a large number start from zero
