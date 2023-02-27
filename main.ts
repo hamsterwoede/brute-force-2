@@ -1,3 +1,7 @@
+input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
+    state = 1
+    currentNum = randint(0, MaxNum)
+})
 // wisselt van richting
 input.onButtonPressed(Button.A, function () {
     Counter = -1
@@ -51,14 +55,10 @@ function drawNumber (NumberToDraw: number) {
         }
     }
 }
-input.onLogoEvent(TouchButtonEvent.Pressed, function () {
-    state = 1
-    currentNum = randint(0, MaxNum)
-})
-let currentNum = 0
 let bright = 0
 let yPos = 0
 let xPos = 0
+let currentNum = 0
 let state = 0
 let Counter = 0
 let MaxNum = 0
